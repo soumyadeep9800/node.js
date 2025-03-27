@@ -1,0 +1,34 @@
+use harrycark
+ show dbs
+//insert item
+db.items.insertOne({name:"samsung30s",
+price:2200,
+rating:4.5,
+qty:233,
+sold:98})
+
+
+db.items.insertMany([{name:"samsung30s",price:2200,rating:4.5,qty:233,sold:98},
+{name:"samsungA12s",price:1750,rating:4.3,qty:283,sold:198},
+{name:"moto20A",price:1700,rating:4.2,qty:133,sold:198, isBig:"true"}])
+
+//see the items
+db.items.find()
+
+//search items
+ db.items.find({rating:4.5})
+ db.items.find({price:1750})
+ db.items.find({rating:{$gte:4.5}})  //only show larger or equel 3.5 rating items
+ db.items.find({rating:{$gt:4.5}})  //only show larger 3.5 rating items
+ db.items.find({rating:{$gte:3.2},price:{$gte:2500}})//both filter will apply 
+ db.items.find({$or:[{rating:{$lt: 3.2}},{price:{$gt:2500}}]});or filter one must be true, lt means less than
+ db.items.find({rating:{$gt:3.5}},{rating:1})
+ db.items.find({rating: {$gt: 3.5}}, {rating: 1, price: 1})
+
+//deleting data
+db.items.deleteOne({price:1750}) //this price delete 1st item
+db.items.deleteMany({price:2200})   //this same parice present all items will delete
+
+//update data
+db.items.updateOne({name:"oneplus nord3"},{$set:{name:"oneplus nord 3"}})
+db.items.updateMany({name:"oneplus nord 3"},{$set:{name:"oneplus nord",rating:4.87}})
